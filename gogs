@@ -1,0 +1,155 @@
+#!/bin/bash
+# Interact with the GOGS API
+
+action=${1:-"help"}
+
+# preseed for checks
+response_code=0
+
+# ensure GOGS_ROOT_URL is set
+if [ -z $GOGS_ROOT_URL ]
+then
+    printf "Need to set GOGS_ROOT_URL environment variable\n" >&2
+    printf "\tIE: https://try.gogs.io\n" >&2
+
+    response_code=1
+fi
+
+# ensure GOGS_TOKEN is set
+if [ -z $GOGS_TOKEN ]
+then
+    printf "Need to set GOGS_TOKEN environment variable\n" >&2
+    printf "\tThis can be obtained at $GOGS_ROOT_URL/user/settings/applications\n" >&2
+
+    response_code=1
+fi
+
+# exit if either of the environment variables above are not set
+if [ $response_code -ne 0 ]
+then
+    exit $response_code
+fi
+
+# create a GOGS repository
+# https://github.com/gogits/go-gogs-client/wiki/Administration-Repositories#create-a-new-repository
+create_repo() {
+    local user_name=$1  # name of the user / organization where the repo will be created
+    local repo_name=$2  # name of the repo to be created
+
+    printf "--" "---> Creating GOGS repository\n"
+    printf "--" "---> User/Org Name: $user_name\n"
+    printf "--" "---> Repo Name: $repo_name\n"
+
+    curl -H "Content-Type: application/json" \
+         -H "Authorization: token $GOGS_TOKEN" \
+         -d "{ \
+            \"name\": \"$repo_name\", \
+            \"private\": false \
+         }" \
+         -v $GOGS_ROOT_URL/api/v1/admin/users/$user_name/repos
+}
+
+# create a GOGS webhook
+# https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks
+create_webhook() {
+    local user_name=$1    # valid GOGS user that has access rights
+    local repo_name=$2    # name of the repo where the webhook will be created
+    local webhook_url=$3  # the url for the webhook that will be created
+
+    printf "--" "---> Creating GOGS webhook\n"
+    printf "--" "---> Repo Name: $repo_name\n"
+    printf "--" "---> Webhook URL: $webhook_url\n"
+
+    curl -H "Content-Type: application/json" \
+         -H "Authorization: token $GOGS_TOKEN" \
+         -d "{\
+                \"type\": \"gogs\",
+                \"config\": {
+                \"content_type\": \"json\",
+                \"url\": \"$webhook_url\"
+            },
+            \"events\": [
+                \"create\",
+                \"push\"
+            ],
+            \"active\": true
+         }"\
+         -v $GOGS_ROOT_URL/api/v1/repos/LiveVox/$repo_name/hooks
+}
+
+# print environment information
+env() {
+    printf "GOGS_ROOT_URL=$GOGS_ROOT_URL\n"
+    printf "GOGS_TOKEN=$GOGS_TOKEN\n"
+}
+
+# print help
+help() {
+    local topic=$1
+
+    case "$topic" in
+        create-repo)
+            printf "Create a GOGS repository.\n"
+            printf "\n"
+            printf "Usage:\n"
+            printf "\n"
+            printf "\t$0 $1 <user_name> <repo_name>\n"
+            printf "\n"
+            printf "Arguments:\n"
+            printf "\n"
+            printf "\tuser_name\tname of the user or organization where the repo will be created\n"
+            printf "\trepo_name\tname of the repository to be created\n"
+            ;;
+
+        create-webhook)
+            printf "Create a GOGS webhook.\n"
+            printf "\n"
+            printf "Usage:\n"
+            printf "\n"
+            printf "\t$0 $1 <user_name> <repo_name> <webhook_url>\n"
+            printf "\n"
+            printf "Arguments:\n"
+            printf "\n"
+            printf "\tuser_name\tvalid GOGS user that has access rights\n"
+            printf "\trepo_name\tname of the repo where the webhook will be created\n"
+            printf "\twebhook_url\tthe url for the webhook that will be created\n"
+            ;;
+
+        env)
+            printf "TODO\n"
+            ;;
+
+        *)
+            printf "$0 is a tool for interacting with the GOGS API.\n"
+            printf "\n"
+            printf "Usage:\n"
+            printf "\t$0 command [arguments]\n"
+            printf "\n"
+            printf "The commands are:\n"
+            printf "\n"
+            printf "\tcreate-repo\tcreate a repository\n"
+            printf "\tcreate-webhook\tcreate a webhook\n"
+            printf "\tenv\t\tprint environment information\n"
+            printf "\n"
+            printf "Use \"$0 help [command]\" for mor information about a command."
+            ;;
+    esac
+}
+
+case "$action" in
+    create-repo)
+        create_repo $2 $3
+        ;;
+
+    create-webhook)
+        create_webhook $2 $3 $4
+        ;;
+
+    env)
+        env
+        ;;
+
+    *)
+        help $2
+        ;;
+esac
