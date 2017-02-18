@@ -99,30 +99,34 @@ help() {
 
 	case "$topic" in
 		create-repo)
-			printf "Create a GOGS repository.\n"
-			printf "\n"
-			printf "Usage:\n"
-			printf "\n"
-			printf "\t$0 $1 <user_name> <repo_name>\n"
-			printf "\n"
-			printf "Arguments:\n"
-			printf "\n"
-			printf "\tuser_name\tname of the user or organization where the repo will be created\n"
-			printf "\trepo_name\tname of the repository to be created\n"
+			cat <<-END
+			Create a GOGS repository.
+			
+			Usage:
+			
+			    $0 $1 <user_name> <repo_name>
+			
+			Arguments:
+			
+			    user_name   name of the user or organization where the repo will be created
+			    repo_name   name of the repository to be created
+			END
 			;;
 
 		create-webhook)
-			printf "Create a GOGS webhook.\n"
-			printf "\n"
-			printf "Usage:\n"
-			printf "\n"
-			printf "\t$0 $1 <user_name> <repo_name> <webhook_url>\n"
-			printf "\n"
-			printf "Arguments:\n"
-			printf "\n"
-			printf "\tuser_name\tvalid GOGS user that has access rights\n"
-			printf "\trepo_name\tname of the repo where the webhook will be created\n"
-			printf "\twebhook_url\tthe url for the webhook that will be created\n"
+			cat <<-END
+			Create a GOGS webhook.
+			
+			Usage:
+			
+			    $0 $1 <user_name> <repo_name> <webhook_url>
+			
+			Arguments:
+			
+			    user_name       valid GOGS user that has access rights
+			    repo_name       name of the repo where the webhook will be created
+			    webhook_url     the url for the webhook that will be created
+			END
 			;;
 
 		env)
@@ -140,18 +144,20 @@ help() {
 			;;
 
 		*)
-			printf "$0 is a tool for interacting with the GOGS API.\n"
-			printf "\n"
-			printf "Usage:\n"
-			printf "\t$0 command [arguments]\n"
-			printf "\n"
-			printf "The commands are:\n"
-			printf "\n"
-			printf "\tcreate-repo\tcreate a repository\n"
-			printf "\tcreate-webhook\tcreate a webhook\n"
-			printf "\tenv\t\tprint environment information\n"
-			printf "\n"
-			printf "Use \"$0 help [command]\" for mor information about a command."
+			cat <<-END
+			$0 is a tool for interacting with the GOGS API.
+			
+			Usage:
+			    $0 command [arguments]
+			
+			The commands are:
+			
+			    create-repo     create a repository
+			    create-webhook  create a webhook
+			    env             print environment information
+			
+			Use "$0 help [command]" for more information about a command.
+			END
 			;;
 	esac
 }
