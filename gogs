@@ -131,14 +131,14 @@ help() {
 
 		env)
 			cat <<-END
-				Prints environment variables needed by this script.
+			Prints environment variables needed by this script.
 
-				Variables:
+			Variables:
 				
-				    GOGS_ROOT_URL   The url of the GOGS server
+			    GOGS_ROOT_URL   The url of the GOGS server
 				                    (IE: https://try.gogs.io)
 
-				    GOGS_TOKEN      Application token configured in GOGS
+			    GOGS_TOKEN      Application token configured in GOGS
 				                    (Obtained from $GOGS_ROOT_URL/user/settings/applications)
 			END
 			;;
