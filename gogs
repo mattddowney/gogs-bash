@@ -1,8 +1,8 @@
 #!/bin/bash
 # Interact with the GOGS API
-# Copyright (c) 2017 Matthew Downey (mattddowney@gmail.com)
+# Copyright (c) 2017 Matthew Downey (mattddowney@gmail_NOSPAM_.com)
 # Relased under the MIT License
-# See https://github.com/mattddowney/gogs-bash/blob/master/LICENSE for the complete license text
+# See https://raw.githubusercontent.com/mattddowney/gogs-bash/master/LICENSE for the complete license text
 
 action=${1:-"help"}
 
