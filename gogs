@@ -60,7 +60,7 @@ create_repo() {
 # create a GOGS webhook
 # https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#create-a-hook
 create_webhook() {
-	local user_name=$1    # name of the user / organizationo that owns the repo where the webhook will be created
+	local user_name=$1    # name of the user / organization that owns the repo where the webhook will be created
 	local repo_name=$2    # name of the repo where the webhook will be created
 	local webhook_url=$3  # the url for the webhook that will be created
 
@@ -91,6 +91,20 @@ create_webhook() {
 env() {
 	printf "GOGS_ROOT_URL=$GOGS_ROOT_URL\n"
 	printf "GOGS_TOKEN=$GOGS_TOKEN\n"
+}
+
+# get a list of GOGS webhooks for a repo
+# https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#list-hooks
+get_webhooks() {
+	local user_name=$1 # name of the user / organization that owns the repo
+	local repo_name=$2 # name of the repo to list webhooks for
+
+	printf "--" "---> Getting list of GOGS webhooks\n"
+	printf "--" "---> User Name: $user_name\n"
+	printf "--" "---> Repo Name: $repo_name\n"
+
+	curl -H "Authorization: token $GOGS_TOKEN" \
+		 -v $GOGS_ROOT_URL/api/v1/repos/$user_name/$repo_name/hooks
 }
 
 # print help
@@ -143,6 +157,21 @@ help() {
 			END
 			;;
 
+		get-webhooks)
+			cat <<-END
+			Get a list of GOGS webhooks for a repo.
+
+			Usage:
+
+			    $0 $1 <user_name> <repo_name>
+
+			Arguments:
+
+			    user_name	name of the user / organization that owns the repo
+				repo_name   name of the repo to list webhooks for
+			END
+			;;
+
 		*)
 			cat <<-END
 			$0 is a tool for interacting with the GOGS API.
@@ -155,6 +184,7 @@ help() {
 			    create-repo     create a repository
 			    create-webhook  create a webhook
 			    env             print environment information
+			    get-webhooks    get a list of webhooks for a repo
 			
 			Use "$0 help [command]" for more information about a command.
 			END
@@ -173,6 +203,10 @@ case "$action" in
 
 	env)
 		env
+		;;
+
+	get-webhooks)
+		get_webhooks $2 $3
 		;;
 
 	*)
