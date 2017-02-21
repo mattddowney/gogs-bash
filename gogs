@@ -58,7 +58,7 @@ create_repo() {
 }
 
 # create a GOGS webhook
-# https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks
+# https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#create-a-hook
 create_webhook() {
 	local user_name=$1    # valid GOGS user that has access rights
 	local repo_name=$2    # name of the repo where the webhook will be created
