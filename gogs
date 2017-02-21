@@ -73,7 +73,7 @@ create_webhook() {
 			"type": "gogs",
 			"config": {
 				"content_type": "json",
-				"url": "$webhook_url",
+				"url": "$webhook_url"
 			},
 			"events": [ "create", "push" ],
 			"active": true
