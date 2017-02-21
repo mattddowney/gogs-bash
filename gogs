@@ -53,7 +53,7 @@ create_repo() {
 
 	curl -H "Content-Type: application/json" \
 		 -H "Authorization: token $GOGS_TOKEN" \
-		 -d $body \
+		 -d "$body" \
 		 -v $GOGS_ROOT_URL/api/v1/admin/users/$user_name/repos
 }
 
@@ -83,7 +83,7 @@ create_webhook() {
 
 	curl -H "Content-Type: application/json" \
 		 -H "Authorization: token $GOGS_TOKEN" \
-		 -d $body \
+		 -d "$body" \
 		 -v $GOGS_ROOT_URL/api/v1/repos/LiveVox/$repo_name/hooks
 }
 
