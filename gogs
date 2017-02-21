@@ -84,7 +84,7 @@ create_webhook() {
 	curl -H "Content-Type: application/json" \
 		 -H "Authorization: token $GOGS_TOKEN" \
 		 -d "$body" \
-		 -v $GOGS_ROOT_URL/api/v1/repos/LiveVox/$repo_name/hooks
+		 -v $GOGS_ROOT_URL/api/v1/repos/$user_name/$repo_name/hooks
 }
 
 # print environment information
