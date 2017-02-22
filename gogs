@@ -84,6 +84,32 @@ create_webhook() {
 	local repo_name=$2    # name of the repo where the webhook will be created
 	local webhook_url=$3  # the url for the webhook that will be created
 
+	# ensure user_name is passed in
+	if [ -z $user_name ]
+	then
+		response_code=1
+	fi
+
+	# ensure repo_name is passed in
+	if [ -z $repo_name ]
+	then
+		response_code=1
+	fi
+
+	# ensure that webhook_url is passed in
+	if [ -z $webhook_url ]
+	then
+		response_code=1
+	fi
+
+	# print help and exit either of the variables above are not passed in
+	if [ $response_code -ne 0 ]
+	then
+		help "create-webhook"
+
+		exit $response_code
+	fi
+
 	printf "--" "---> Creating GOGS webhook\n"
 	printf "--" "---> Repo Name: $repo_name\n"
 	printf "--" "---> Webhook URL: $webhook_url\n"
