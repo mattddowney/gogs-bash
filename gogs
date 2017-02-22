@@ -39,6 +39,26 @@ create_repo() {
 	local user_name=$1  # name of the user / organization where the repo will be created
 	local repo_name=$2  # name of the repo to be created
 
+	# ensure user_name is passed in
+	if [ -z $user_name ]
+	then
+		response_code=1
+	fi
+
+	# ensure repo_name is passed in
+	if [ -z $repo_name ]
+	then
+		response_code=1
+	fi
+
+	# print help and exit either of the variables above are not passed in
+	if [ $response_code -ne 0 ]
+	then
+		help "create-repo"
+
+		exit $response_code
+	fi
+
 	printf "--" "---> Creating GOGS repository\n"
 	printf "--" "---> User/Org Name: $user_name\n"
 	printf "--" "---> Repo Name: $repo_name\n"
