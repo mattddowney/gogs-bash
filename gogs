@@ -68,7 +68,7 @@ create_repo() {
 			"name": "$repo_name",
 			"private": false
 		}
-		END
+	END
     )
 
 	curl -H "Content-Type: application/json" \
