@@ -133,6 +133,49 @@ create_webhook() {
 		 -v $GOGS_ROOT_URL/api/v1/repos/$user_name/$repo_name/hooks
 }
 
+# delete a GOGS webhook for a repo
+# https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#delete-a-hook
+delete_webhook() {
+	local user_name=$1
+	local repo_name=$2
+	local webhook_id=$3
+
+	# ensuer user_name is passed in
+	if [ -z $user_name ]
+	then
+		response_code=1
+	fi
+
+	# ensure repo_name is passed in
+	if [ -z $repo_name ]
+	then
+		response_code=1
+	fi
+
+	# ensure webhook_id is passed in
+	if [ -z $webhook_id ]
+	then
+		response_code=1	
+	fi
+
+	# print help and exit any of the variables above are not passed in
+	if [ $reponse_code -ne 0 ]
+	then
+		help "delete-webhook"
+
+		exit $response_code
+	fi
+
+	printf "--" "---> Deleting GOGS webhook\n"
+	printf "--" "---> User Name: $user_name\n"
+	printf "--" "---> Repo Name: $repo_name\n"
+	printf "--" "---> Webhook Id: $webhook_id\n"
+
+	curl -H "Authorization: token $GOGS_TOKEN" \
+		 -X DELETE \
+		 -v $GOGS_ROOT_URL/api/v1/repos/$user_name/$repo_name/hooks/$webhook_id
+}
+
 # print environment information
 env() {
 	printf "GOGS_ROOT_URL=$GOGS_ROOT_URL\n"
@@ -209,6 +252,22 @@ help() {
 			END
 			;;
 
+		delete-webhook)
+			cat <<-END
+			Delete a GOGS webhook.
+
+			Usage:
+
+			    $0 $1 <user_name> <repo_name> <webhook_id>
+
+			Arguments:
+
+			    user_name   name of the user / organizationo that owns the repo containing the webhook
+				repo_name	name of the repo that contains the webhook
+				webhook_id  id of the webhook that will be deleted
+			END
+			;;
+
 		env)
 			cat <<-END
 			Prints environment variables needed by this script.
@@ -265,6 +324,10 @@ case "$action" in
 
 	create-webhook)
 		create_webhook $2 $3 $4
+		;;
+
+	delete-webhook)
+		delete_webhook $2 $3 $4
 		;;
 
 	env)
