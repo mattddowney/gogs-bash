@@ -27,6 +27,7 @@ The commands are:
 
     create-repo     create a repository
     create-webhook  create a webhook
+    delete-webhook  delete a webhook
     env             print environment information
     get-webhooks    get a list of webhooks for a repo
 
