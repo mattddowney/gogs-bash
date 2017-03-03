@@ -293,7 +293,7 @@ help() {
 			Arguments:
 
 			    user_name	name of the user / organization that owns the repo
-				repo_name   name of the repo to list webhooks for
+			    repo_name   name of the repo to list webhooks for
 			END
 			;;
 
