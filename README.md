@@ -29,6 +29,7 @@ The commands are:
     create-webhook  create a webhook
     delete-webhook  delete a webhook
     env             print environment information
+    get-user-repos  get a list of repos for a user
     get-webhooks    get a list of webhooks for a repo
 
 Use "./gogs help [command]" for more information about a command.
