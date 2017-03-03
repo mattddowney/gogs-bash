@@ -35,7 +35,7 @@ fi
 
 # create a GOGS repository
 # https://github.com/gogits/go-gogs-client/wiki/Administration-Repositories#create-a-new-repository
-create_repo() {
+create-repo() {
 	local user_name=$1  # name of the user / organization where the repo will be created
 	local repo_name=$2  # name of the repo to be created
 
@@ -79,7 +79,7 @@ create_repo() {
 
 # create a GOGS webhook
 # https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#create-a-hook
-create_webhook() {
+create-webhook() {
 	local user_name=$1    # name of the user / organization that owns the repo where the webhook will be created
 	local repo_name=$2    # name of the repo where the webhook will be created
 	local webhook_url=$3  # the url for the webhook that will be created
@@ -135,7 +135,7 @@ create_webhook() {
 
 # delete a GOGS webhook for a repo
 # https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#delete-a-hook
-delete_webhook() {
+delete-webhook() {
 	local user_name=$1
 	local repo_name=$2
 	local webhook_id=$3
@@ -184,7 +184,7 @@ env() {
 
 # get a list of GOGS repos for a user
 # https://github.com/gogits/go-gogs-client/wiki/Repositories#list-user-repositories
-get_user_repos() {
+get-user-repos() {
 	local user_name=$1 # name of the user who's repos to list
 
 	# ensure user_name is passed in
@@ -205,7 +205,7 @@ get_user_repos() {
 
 # get a list of GOGS webhooks for a repo
 # https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#list-hooks
-get_webhooks() {
+get-webhooks() {
 	local user_name=$1 # name of the user / organization that owns the repo
 	local repo_name=$2 # name of the repo to list webhooks for
 
@@ -354,32 +354,4 @@ help() {
 	esac
 }
 
-case "$action" in
-	create-repo)
-		create_repo $2 $3
-		;;
-
-	create-webhook)
-		create_webhook $2 $3 $4
-		;;
-
-	delete-webhook)
-		delete_webhook $2 $3 $4
-		;;
-
-	env)
-		env
-		;;
-
-	get-user-repos)
-		get_user_repos $2
-		;;
-
-	get-webhooks)
-		get_webhooks $2 $3
-		;;
-
-	*)
-		help $2
-		;;
-esac
+"$action" "${@:2}"
