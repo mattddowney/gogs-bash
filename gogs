@@ -182,6 +182,27 @@ env() {
 	printf "GOGS_TOKEN=$GOGS_TOKEN\n"
 }
 
+# get a list of GOGS repos for a user
+# https://github.com/gogits/go-gogs-client/wiki/Repositories#list-user-repositories
+get_user_repos() {
+	local user_name=$1 # name of the user who's repos to list
+
+	# ensure user_name is passed in
+	if [ -z $user_name ]
+	then
+		help "get-user-repos"
+
+		exit 1
+	fi
+
+	printf "--" "---> Getting list of GOGS repos\n"
+	printf "--" "---> User Name: $user_name\n"
+
+	curl -H "Content-Type: application/json" \
+	     -H "Authorization: token $GOGS_TOKEN" \
+		 -v $GOGS_ROOT_URL/api/v1/users/mattddowney/repos
+}
+
 # get a list of GOGS webhooks for a repo
 # https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#list-hooks
 get_webhooks() {
@@ -282,6 +303,20 @@ help() {
 			END
 			;;
 
+		get-user-repos)
+			cat <<-END
+			Get a list of GOGS repos for a user.
+
+			Usage:
+
+			    $0 $1 <user_name>
+
+			Arguments:
+
+			    user_name   name of the user who's repos to list
+			END
+			;;
+
 		get-webhooks)
 			cat <<-END
 			Get a list of GOGS webhooks for a repo.
@@ -310,6 +345,7 @@ help() {
 			    create-webhook  create a webhook
 			    delete-webhook  delete a webhook
 			    env             print environment information
+			    get-user-repos  get a list of repos for a user
 			    get-webhooks    get a list of webhooks for a repo
 			
 			Use "$0 help [command]" for more information about a command.
@@ -333,6 +369,10 @@ case "$action" in
 
 	env)
 		env
+		;;
+
+	get-user-repos)
+		get_user_repos $2
 		;;
 
 	get-webhooks)
