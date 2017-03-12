@@ -239,6 +239,7 @@ get-webhooks() {
 
 # print help
 help() {
+	local prog_name=$(echo "$0" | rev | cut -d'/' -f1 | rev)
 	local topic=$1
 
 	case "$topic" in
@@ -248,7 +249,7 @@ help() {
 			
 			Usage:
 			
-			    $0 $1 <user_name> <repo_name>
+			    $prog_name $1 <user_name> <repo_name>
 			
 			Arguments:
 			
@@ -263,7 +264,7 @@ help() {
 			
 			Usage:
 			
-			    $0 $1 <user_name> <repo_name> <webhook_url>
+			    $prog_name $1 <user_name> <repo_name> <webhook_url>
 			
 			Arguments:
 			
@@ -279,7 +280,7 @@ help() {
 
 			Usage:
 
-			    $0 $1 <user_name> <repo_name> <webhook_id>
+			    $prog_name $1 <user_name> <repo_name> <webhook_id>
 
 			Arguments:
 
@@ -309,7 +310,7 @@ help() {
 
 			Usage:
 
-			    $0 $1 <user_name>
+			    $prog_name $1 <user_name>
 
 			Arguments:
 
@@ -323,7 +324,7 @@ help() {
 
 			Usage:
 
-			    $0 $1 <user_name> <repo_name>
+			    $prog_name $1 <user_name> <repo_name>
 
 			Arguments:
 
@@ -334,10 +335,10 @@ help() {
 
 		*)
 			cat <<-END
-			$0 is a tool for interacting with the GOGS API.
+			$prog_name is a tool for interacting with the GOGS API.
 			
 			Usage:
-			    $0 command [arguments]
+			    $prog_name command [arguments]
 			
 			The commands are:
 			
@@ -348,7 +349,7 @@ help() {
 			    get-user-repos  get a list of repos for a user
 			    get-webhooks    get a list of webhooks for a repo
 			
-			Use "$0 help [command]" for more information about a command.
+			Use "$prog_name help [command]" for more information about a command.
 			END
 			;;
 	esac
