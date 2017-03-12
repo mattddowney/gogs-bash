@@ -155,7 +155,7 @@ delete-webhook() {
 	# ensure webhook_id is passed in
 	if [ -z $webhook_id ]
 	then
-		response_code=1	
+		response_code=1
 	fi
 
 	# print help and exit any of the variables above are not passed in
