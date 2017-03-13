@@ -83,6 +83,7 @@ create-webhook() {
 	local user_name=$1    # name of the user / organization that owns the repo where the webhook will be created
 	local repo_name=$2    # name of the repo where the webhook will be created
 	local webhook_url=$3  # the url for the webhook that will be created
+	local secret=$4       # optional secret that will be passed in the X-Gogs-Signature header
 
 	# ensure user_name is passed in
 	if [ -z $user_name ]
@@ -126,6 +127,12 @@ create-webhook() {
 		}
 	END
 	)
+
+	# add secret to body if one is passed in
+	if [ -n $secret ]
+	then
+		body=$(echo "$body" | jq ".config.secret=\"$secret\"")
+	fi
 
 	curl -H "Content-Type: application/json" \
 		 -H "Authorization: token $GOGS_TOKEN" \
@@ -264,13 +271,14 @@ help() {
 			
 			Usage:
 			
-			    $prog_name $1 <user_name> <repo_name> <webhook_url>
+			    $prog_name $1 <user_name> <repo_name> <webhook_url> [secret]
 			
 			Arguments:
 			
 			    user_name       name of the user / organizationo that owns the repo where the webhook will be created
 			    repo_name       name of the repo where the webhook will be created
 			    webhook_url     the url for the webhook that will be created
+				secret          optional secret that will be passed in the X-Gogs-Signature header
 			END
 			;;
 
