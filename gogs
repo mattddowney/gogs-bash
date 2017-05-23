@@ -227,7 +227,7 @@ get-user-repos() {
 
 	curl -H "Content-Type: application/json" \
 	     -H "Authorization: token $GOGS_TOKEN" \
-		 -v $GOGS_ROOT_URL/api/v1/users/mattddowney/repos
+		 -v "$GOGS_ROOT_URL/api/v1/users/$user_name/repos"
 }
 
 # get a list of GOGS webhooks for a repo
