@@ -190,6 +190,7 @@ env() {
 }
 
 # get a list of repos by search keyword
+# https://github.com/gogits/go-gogs-client/wiki/Repositories#search-repositories
 get-repos() {
 	local search_keyword=$1 # term to find inside the repo name
 
