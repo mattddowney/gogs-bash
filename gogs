@@ -189,6 +189,26 @@ env() {
 	printf "GOGS_TOKEN=$GOGS_TOKEN\n"
 }
 
+# get a list of repos by search keyword
+get-repos() {
+	local search_keyword=$1 # term to find inside the repo name
+
+	# ensure search_keyword is passed in
+	if [ -z $search_keyword ]
+	then
+		help "get-repos"
+
+		exit 1
+	fi
+
+	printf "--" "---> Getting list of GOGS repos\n"
+	printf "--" "---> User Name: $user_name\n"
+
+	curl -H "Content-Type: application.json" \
+		 -H "Authorization: token $GOGS_TOKEN" \
+		 -v "$GOGS_ROOT_URL/api/v1/repos/search?q=$search_keyword"
+}
+
 # get a list of GOGS repos for a user
 # https://github.com/gogits/go-gogs-client/wiki/Repositories#list-user-repositories
 get-user-repos() {
@@ -311,6 +331,20 @@ help() {
 				                    (Obtained from $GOGS_ROOT_URL/user/settings/applications)
 			END
 			;;
+		
+		get-repos)
+			cat <<-END
+			Get a list of GOGS repos by search keyword.
+
+			Usage:
+
+			    $prog_name $1   <search_keyword>
+
+			Arguments:
+
+			    search_keyword  term to find inside the repo name
+			END
+			;;
 
 		get-user-repos)
 			cat <<-END
@@ -354,6 +388,7 @@ help() {
 			    create-webhook  create a webhook
 			    delete-webhook  delete a webhook
 			    env             print environment information
+			    get-repos       get a list of repos by search keyword
 			    get-user-repos  get a list of repos for a user
 			    get-webhooks    get a list of webhooks for a repo
 			
