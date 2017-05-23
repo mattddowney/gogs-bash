@@ -29,6 +29,7 @@ The commands are:
     create-webhook  create a webhook
     delete-webhook  delete a webhook
     env             print environment information
+    get-repos       get a list of repos by search keyword
     get-user-repos  get a list of repos for a user
     get-webhooks    get a list of webhooks for a repo
 
