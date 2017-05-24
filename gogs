@@ -147,7 +147,7 @@ delete-webhook() {
 	local repo_name=$2
 	local webhook_id=$3
 
-	# ensuer user_name is passed in
+	# ensure user_name is passed in
 	if [ -z $user_name ]
 	then
 		response_code=1
