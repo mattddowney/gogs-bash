@@ -203,7 +203,6 @@ get-repos() {
 	fi
 
 	printf "--" "---> Getting list of GOGS repos\n"
-	printf "--" "---> User Name: $user_name\n"
 
 	curl -H "Content-Type: application.json" \
 		 -H "Authorization: token $GOGS_TOKEN" \
