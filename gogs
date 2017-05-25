@@ -231,6 +231,26 @@ get-user-repos() {
 		 -v "$GOGS_ROOT_URL/api/v1/users/$user_name/repos"
 }
 
+# get a list of users by search keyword
+# https://github.com/gogits/go-gogs-client/wiki/Users#search-users
+get-users() {
+	local search_keyword=$1 # term to find inside the repo name
+
+	# ensure search_keyword is passed in
+	if [ -z $search_keyword ]
+	then
+		help "get-users"
+
+		exit 1
+	fi
+
+	printf "--" "---> Getting list of GOGS users\n"
+
+	curl -H "Content-Type: application.json" \
+		 -H "Authorization: token $GOGS_TOKEN" \
+		 -v "$GOGS_ROOT_URL/api/v1/users/search?q=$search_keyword"
+}
+
 # get a list of GOGS webhooks for a repo
 # https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#list-hooks
 get-webhooks() {
@@ -361,6 +381,19 @@ help() {
 			END
 			;;
 
+		get-users)
+			cat <<-END
+			Get a list of GOGS users by search keyword.
+
+			Usage:
+			    $prog_name $1	<search_keyword>
+
+			Arguments:
+
+			    search_keyword  term to find inside the username
+			END
+			;;
+		
 		get-webhooks)
 			cat <<-END
 			Get a list of GOGS webhooks for a repo.
@@ -391,6 +424,7 @@ help() {
 			    env             print environment information
 			    get-repos       get a list of repos by search keyword
 			    get-user-repos  get a list of repos for a user
+			    get-users       get a list of users by search keyword
 			    get-webhooks    get a list of webhooks for a repo
 			
 			Use "$prog_name help [command]" for more information about a command.
