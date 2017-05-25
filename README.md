@@ -31,6 +31,7 @@ The commands are:
     env             print environment information
     get-repos       get a list of repos by search keyword
     get-user-repos  get a list of repos for a user
+    get-users       get a list of users by search keyword
     get-webhooks    get a list of webhooks for a repo
 
 Use "./gogs help [command]" for more information about a command.
