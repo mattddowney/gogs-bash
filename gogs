@@ -51,7 +51,7 @@ create-repo() {
 		response_code=1
 	fi
 
-	# print help and exit either of the variables above are not passed in
+	# print help and exit if either of the variables above are not passed in
 	if [ $response_code -ne 0 ]
 	then
 		help "create-repo"
@@ -103,7 +103,7 @@ create-webhook() {
 		response_code=1
 	fi
 
-	# print help and exit either of the variables above are not passed in
+	# print help and exit if either of the variables above are not passed in
 	if [ $response_code -ne 0 ]
 	then
 		help "create-webhook"
@@ -165,7 +165,7 @@ delete-webhook() {
 		response_code=1
 	fi
 
-	# print help and exit any of the variables above are not passed in
+	# print help and exit if any of the variables above are not passed in
 	if [ $reponse_code -ne 0 ]
 	then
 		help "delete-webhook"
@@ -268,7 +268,7 @@ get-webhooks() {
 		response_code=1
 	fi
 
-	# print help and exit either of the variables above are not passed in
+	# print help and exit if either of the variables above are not passed in
 	if [ $response_code -ne 0 ]
 	then
 		help "get-webhooks"
