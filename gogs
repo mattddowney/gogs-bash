@@ -34,7 +34,7 @@ then
 fi
 
 # create a GOGS repository
-# https://github.com/gogits/go-gogs-client/wiki/Administration-Repositories#create-a-new-repository
+# https://github.com/gogs/docs-api/blob/master/Administration/Repositories.md#create-a-new-repository
 create-repo() {
 	local user_name=$1  # name of the user / organization where the repo will be created
 	local repo_name=$2  # name of the repo to be created
@@ -78,7 +78,7 @@ create-repo() {
 }
 
 # create a GOGS webhook
-# https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#create-a-hook
+# https://github.com/gogs/docs-api/blob/master/Repositories/Webhooks.md#create-a-hook
 create-webhook() {
 	local user_name=$1    # name of the user / organization that owns the repo where the webhook will be created
 	local repo_name=$2    # name of the repo where the webhook will be created
@@ -114,7 +114,7 @@ create-webhook() {
 	printf "--" "---> Creating GOGS webhook\n"
 	printf "--" "---> Repo Name: $repo_name\n"
 	printf "--" "---> Webhook URL: $webhook_url\n"
-	
+
 	local body=$(cat <<-END
 		{
 			"type": "gogs",
@@ -141,7 +141,7 @@ create-webhook() {
 }
 
 # delete a GOGS webhook for a repo
-# https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#delete-a-hook
+# https://github.com/gogs/docs-api/blob/master/Repositories/Webhooks.md#delete-a-hook
 delete-webhook() {
 	local user_name=$1
 	local repo_name=$2
@@ -190,7 +190,7 @@ env() {
 }
 
 # get a list of repos by search keyword
-# https://github.com/gogits/go-gogs-client/wiki/Repositories#search-repositories
+# https://github.com/gogs/docs-api/tree/master/Repositories#search-repositories
 get-repos() {
 	local search_keyword=$1 # term to find inside the repo name
 
@@ -210,7 +210,7 @@ get-repos() {
 }
 
 # get a list of GOGS repos for a user
-# https://github.com/gogits/go-gogs-client/wiki/Repositories#list-user-repositories
+# https://github.com/gogs/docs-api/tree/master/Repositories#list-user-repositories
 get-user-repos() {
 	local user_name=$1 # name of the user who's repos to list
 
@@ -231,7 +231,7 @@ get-user-repos() {
 }
 
 # get a list of users by search keyword
-# https://github.com/gogits/go-gogs-client/wiki/Users#search-users
+# https://github.com/gogs/docs-api/tree/master/Users#search-users
 get-users() {
 	local search_keyword=$1 # term to find inside the repo name
 
@@ -251,7 +251,7 @@ get-users() {
 }
 
 # get a list of GOGS webhooks for a repo
-# https://github.com/gogits/go-gogs-client/wiki/Repositories-Webhooks#list-hooks
+# https://github.com/gogs/docs-api/blob/master/Repositories/Webhooks.md#list-hooks
 get-webhooks() {
 	local user_name=$1 # name of the user / organization that owns the repo
 	local repo_name=$2 # name of the repo to list webhooks for
@@ -293,13 +293,13 @@ help() {
 		create-repo)
 			cat <<-END
 			Create a GOGS repository.
-			
+
 			Usage:
-			
+
 			    $prog_name $1 <user_name> <repo_name>
-			
+
 			Arguments:
-			
+
 			    user_name   name of the user or organization where the repo will be created
 			    repo_name   name of the repository to be created
 			END
@@ -308,13 +308,13 @@ help() {
 		create-webhook)
 			cat <<-END
 			Create a GOGS webhook.
-			
+
 			Usage:
-			
+
 			    $prog_name $1 <user_name> <repo_name> <webhook_url> [secret]
-			
+
 			Arguments:
-			
+
 			    user_name       name of the user / organizationo that owns the repo where the webhook will be created
 			    repo_name       name of the repo where the webhook will be created
 			    webhook_url     the url for the webhook that will be created
@@ -343,7 +343,7 @@ help() {
 			Prints environment variables needed by this script.
 
 			Variables:
-				
+
 			    GOGS_ROOT_URL   The url of the GOGS server
 				                    (IE: https://try.gogs.io)
 
@@ -351,7 +351,7 @@ help() {
 				                    (Obtained from $GOGS_ROOT_URL/user/settings/applications)
 			END
 			;;
-		
+
 		get-repos)
 			cat <<-END
 			Get a list of GOGS repos by search keyword.
@@ -392,7 +392,7 @@ help() {
 			    search_keyword  term to find inside the username
 			END
 			;;
-		
+
 		get-webhooks)
 			cat <<-END
 			Get a list of GOGS webhooks for a repo.
@@ -411,12 +411,12 @@ help() {
 		*)
 			cat <<-END
 			$prog_name is a tool for interacting with the GOGS API.
-			
+
 			Usage:
 			    $prog_name command [arguments]
-			
+
 			The commands are:
-			
+
 			    create-repo     create a repository
 			    create-webhook  create a webhook
 			    delete-webhook  delete a webhook
@@ -425,7 +425,7 @@ help() {
 			    get-user-repos  get a list of repos for a user
 			    get-users       get a list of users by search keyword
 			    get-webhooks    get a list of webhooks for a repo
-			
+
 			Use "$prog_name help [command]" for more information about a command.
 			END
 			;;
